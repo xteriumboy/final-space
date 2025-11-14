@@ -1,0 +1,5 @@
+<!doctype html><meta charset="utf-8"><title>Final Space License Server</title>
+<style>body{background:#0b0f14;color:#e7ebf0;font-family:system-ui;margin:0} .top{background:#111827;padding:12px 16px;display:flex;justify-content:space-between} a{color:#8ab4ff;text-decoration:none} .wrap{padding:16px} input,textarea,select{background:#0f172a;border:1px solid #1f2937;color:#e7ebf0;border-radius:8px;padding:8px;width:100%;box-sizing:border-box} button{background:#2563eb;border:0;color:#fff;border-radius:8px;padding:8px 12px;cursor:pointer} table{width:100%;border-collapse:collapse;margin-top:12px} th,td{border:1px solid #1f2937;padding:8px} .card{background:#0f172a;padding:12px;border-radius:12px;margin-bottom:12px}</style>
+<div class="top"><div><b>License Server</b></div><nav><a href="/admin/index.php">Dashboard</a> | <a href="/admin/add_license.php">Add</a> | <a href="/admin/logs.php">Logs</a> | <a href="/admin/reseal_and_verify.php">Reseal</a></nav></div><div class="wrap">
+
+<?php $log=__DIR__.'/../data/server.log'; echo '<div class="card"><h3>Server Log</h3><pre style="white-space:pre-wrap">'.htmlspecialchars(@file_get_contents($log)).'</pre></div></div>'; ?>

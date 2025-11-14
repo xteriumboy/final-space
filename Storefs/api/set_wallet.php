@@ -1,0 +1,1 @@
+<?php session_start(); header('Content-Type: application/json; charset=utf-8'); $a=strtolower(trim($_POST['address']??'')); if(!$a){ $_SESSION['wallet']=null; echo json_encode(['ok'=>true]); exit; } if(!preg_match('/^0x[a-f0-9]{40}$/',$a)){ echo json_encode(['ok'=>false]); exit; } $_SESSION['wallet']=$a; echo json_encode(['ok'=>true,'wallet'=>$a]);

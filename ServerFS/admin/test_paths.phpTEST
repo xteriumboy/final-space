@@ -1,0 +1,6 @@
+<?php
+echo "<pre>";
+echo "SRC_BASE = " . realpath(__DIR__ . '/../protected_src') . "\n";
+echo "OUT_BASE = " . realpath(__DIR__ . '/../protected_out') . "\n\n";
+echo "INC boot exists? " . (is_file(__DIR__ . '/../protected_src/inc/boot.php') ? "YES" : "NO") . "\n";
+echo "API fetch_products exists? " . (is_file(__DIR__ . '/../protected_src/api/fetch_products.php') ? "YES" : "NO") . "\n";

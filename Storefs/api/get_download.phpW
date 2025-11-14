@@ -1,0 +1,14 @@
+<?php
+/**
+ * Final Space Protected Loader — get_download.php
+ * Wrapper that loads the AES-sealed version of this endpoint.
+ */
+
+declare(strict_types=1);
+//require_once dirname(__DIR__) . '/protected/inc/sealed_loader.php';
+require_once dirname(__DIR__) . '/protected/inc/aes_helper.php';
+include_sealed('protected/api/get_download.php.aes');
+
+// Include the sealed source (AES-decrypted by the loader)
+//include_sealed('protected/inc/boot.php');
+include_sealed('protected/api/get_download.php.aes');

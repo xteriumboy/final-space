@@ -1,0 +1,9 @@
+<?php
+error_reporting(E_ALL);
+ini_set('display_errors',1);
+echo "Start\n";
+
+require_once __DIR__.'/../inc/boot.php';
+require_once __DIR__.'/../inc/security.php';
+
+echo "After includes\n";

@@ -1,0 +1,28 @@
+<?php
+require_once __DIR__ . '/../inc/boot.php';
+require_once __DIR__ . '/../inc/security.php';
+
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
+header('Content-Type: application/json');
+
+$license = $_POST['license'] ?? '';
+$domain = $_POST['domain'] ?? '';
+$manifest = $_POST['manifest'] ?? '';
+$publicKey = $_POST['public_key'] ?? '';
+
+if (!$license || !$domain || !$manifest) {
+  echo json_encode(['ok' => false, 'error' => 'missing_params']);
+  exit;
+}
+
+$path = __DIR__ . "/../data/integrity/$domain";
+if (!is_dir($path)) mkdir($path, 0775, true);
+
+file_put_contents("$path/manifest.json", $manifest);
+if ($publicKey) file_put_contents("$path/public.pem", $publicKey);
+
+$st = $DB->prepare("UPDATE licenses SET sealed=1, sealed_at=NOW() WHERE code=? LIMIT 1");
+$st->execute([$license]);
+
+echo json_encode(['ok' => true, 'message' => "Manifest received for $domain"]);

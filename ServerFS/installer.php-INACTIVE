@@ -1,0 +1,30 @@
+<?php
+if($_SERVER['REQUEST_METHOD']==='POST'){
+  $db_host=trim($_POST['db_host']); $db_name=trim($_POST['db_name']); $db_user=trim($_POST['db_user']); $db_pass=(string)$_POST['db_pass'];
+  $admin_user=trim($_POST['admin_user']); $admin_pass=trim($_POST['admin_pass']); $issuer=trim($_POST['issuer']);
+  $dsn="mysql:host={$db_host};dbname={$db_name};charset=utf8mb4";
+  try{ $pdo=new PDO($dsn,$db_user,$db_pass,[PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION]); }catch(Throwable $e){ $err='DB failed: '.$e->getMessage(); }
+  if(empty($err)){
+    $sql=@file_get_contents(__DIR__.'/sql/schema.sql'); if($sql) $pdo->exec($sql);
+    $hash=password_hash($admin_pass, PASSWORD_BCRYPT);
+    $push_secret='fsPushSyncKey-'.bin2hex(random_bytes(6));
+    $cfg="<?php\nreturn ".var_export([
+      'db'=>['dsn'=>$dsn,'user'=>$db_user,'pass'=>$db_pass],
+      'admin'=>['user'=>$admin_user,'pass_hash'=>$hash],
+      'jwt'=>['ttl'=>600,'issuer'=>($issuer?:($_SERVER['HTTP_HOST']??'licenses'))],
+      'push_secret'=>$push_secret,
+      'time_zone'=>'UTC'
+    ], true).";";
+    file_put_contents(__DIR__.'/config.php',$cfg);
+    @mkdir(__DIR__.'/keys',0775,true);
+    $priv=__DIR__.'/keys/server_private.pem'; $pub=__DIR__.'/keys/server_public.pem';
+    if(!is_file($priv)||!is_file($pub)){
+      $res=openssl_pkey_new(['private_key_bits'=>2048,'private_key_type'=>OPENSSL_KEYTYPE_RSA]);
+      openssl_pkey_export($res,$pri); $det=openssl_pkey_get_details($res);
+      file_put_contents($priv,$pri); file_put_contents($pub,$det['key']);
+    }
+    echo '<!doctype html><meta charset="utf-8"><style>body{background:#0b0f14;color:#e7ebf0;font-family:system-ui;padding:32px}a{color:#8ab4ff}.box{background:#0f172a;padding:18px;border-radius:12px}</style><div class="box"><h2>✅ License Server Installed</h2><p>Push Secret saved in config.php</p><p><a href="/admin/login.php">Go to Admin</a></p></div>'; @unlink(__FILE__); exit;
+  }
+}
+?>
+<!-- same dark form as earlier; keep your existing HTML/CSS wrapper -->

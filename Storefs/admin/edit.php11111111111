@@ -1,0 +1,19 @@
+<?php require_once __DIR__.'/../inc/license_core.php'; require_once __DIR__.'/guard.php'; $cfg=require __DIR__.'/../config.php'; $id=intval($_GET['id']??0);
+try{$pdo=new PDO($cfg['db']['dsn'],$cfg['db']['user'],$cfg['db']['pass'],[PDO::ATTR_ERRMODE=>PDO::ERRMODE_EXCEPTION]);}catch(Throwable $e){die('DB error');}
+if($_SERVER['REQUEST_METHOD']==='POST'){ $name=trim($_POST['name']??''); $price=floatval($_POST['price']??0); $desc=trim($_POST['description']??''); $pdo->prepare('UPDATE products SET name=?, description=?, price=? WHERE id=?')->execute([$name,$desc,$price,$id]);
+  if(!empty($_FILES['image']['tmp_name'])){ $dir=__DIR__.'/../uploads'; if(!is_dir($dir)) mkdir($dir,0775,true); $ext=pathinfo($_FILES['image']['name'],PATHINFO_EXTENSION)?:'jpg'; $fn=uniqid('img_').'.'.$ext; move_uploaded_file($_FILES['image']['tmp_name'],$dir.'/'.$fn); $pdo->prepare('UPDATE products SET image=? WHERE id=?')->execute(['/uploads/'.$fn,$id]); }
+  if(!empty($_FILES['file']['tmp_name'])){ $dir=__DIR__.'/../uploads'; if(!is_dir($dir)) mkdir($dir,0775,true); $ext=pathinfo($_FILES['file']['name'],PATHINFO_EXTENSION)?:'bin'; $fn=uniqid('file_').'.'.$ext; move_uploaded_file($_FILES['file']['tmp_name'],$dir.'/'.$fn); $pdo->prepare('UPDATE products SET file_path=? WHERE id=?')->execute(['/uploads/'.$fn,$id]); }
+  header('Location: /admin/products.php'); exit; }
+$st=$pdo->prepare('SELECT * FROM products WHERE id=?'); $st->execute([$id]); $r=$st->fetch();
+?><!doctype html><meta charset="utf-8"><style>body{background:#0b0f14;color:#e7ebf0;font-family:system-ui;padding:16px} input,textarea{background:#0f172a;border:1px solid #1f2937;color:#e7ebf0;border-radius:8px;padding:8px;width:100%;box-sizing:border-box;margin:6px 0} button{background:#2563eb;border:0;color:#fff;border-radius:8px;padding:8px 12px;cursor:pointer}</style>
+<h1>Edit #<?php echo $id; ?></h1>
+<form method="post" enctype="multipart/form-data">
+  <input name="name" value="<?php echo htmlspecialchars($r['name']); ?>">
+  <input name="price" type="number" step="0.01" value="<?php echo htmlspecialchars($r['price']); ?>">
+  <textarea name="description"><?php echo htmlspecialchars($r['description']); ?></textarea>
+  <div>Current image: <?php if($r['image']) echo '<img src="'.$r['image'].'" style="height:60px">'; ?></div>
+  <label>New image <input type="file" name="image" accept="image/*"></label>
+  <div>Current file: <?php echo htmlspecialchars($r['file_path']); ?></div>
+  <label>New file <input type="file" name="file"></label>
+  <button>Save</button>
+</form>
