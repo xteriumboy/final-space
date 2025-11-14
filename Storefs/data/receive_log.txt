@@ -1,0 +1,21 @@
+[2025-11-09 19:24:54] ❌ FAIL: Missing domain field
+[2025-11-09 19:28:41] ✅ SUCCESS: {"message":"received","domain":"2.final-space.com","via":["ip:89.44.109.103","host:2.final-space.com"],"verify":"valid"}
+[2025-11-09 19:28:46] ✅ SUCCESS: {"message":"received","domain":"2.final-space.com","via":["ip:89.44.109.103","host:2.final-space.com"],"verify":"valid"}
+[2025-11-09 19:28:52] ✅ SUCCESS: {"message":"received","domain":"2.final-space.com","via":["ip:89.44.109.103","host:2.final-space.com"],"verify":"valid"}
+[2025-11-09 19:30:32] ✅ SUCCESS: {"message":"received","domain":"2.final-space.com","via":["ip:89.44.109.103","host:2.final-space.com"],"verify":"valid"}
+[2025-11-10 20:38:29] ✅ SUCCESS: {"message":"received","domain":"2.final-space.com","via":["ip:89.44.109.103","host:2.final-space.com"],"verify":"valid"}
+[2025-11-10 20:38:36] ✅ SUCCESS: {"message":"received","domain":"2.final-space.com","via":["ip:89.44.109.103","host:2.final-space.com"],"verify":"valid"}
+[2025-11-10 20:40:05] ✅ SUCCESS: {"message":"received","domain":"2.final-space.com","via":["ip:89.44.109.103","host:2.final-space.com"],"verify":"valid"}
+[2025-11-10 20:48:02] ✅ SUCCESS: {"message":"received","domain":"2.final-space.com","via":["ip:89.44.109.103","host:2.final-space.com"],"verify":"valid"}
+[2025-11-10 20:48:08] ✅ SUCCESS: {"message":"received","domain":"2.final-space.com","via":["ip:89.44.109.103","host:2.final-space.com"],"verify":"valid"}
+[2025-11-10T21:00:32+00:00] Manifest received from 89.44.109.103, verified=yes
+[2025-11-10T21:00:55+00:00] Manifest received from 89.44.109.103, verified=yes
+[2025-11-11 17:32:21 UTC] [OK] Manifest received and verified from 2.final-space.com
+[2025-11-11 17:47:02 UTC] [OK] Manifest saved from 2.final-space.com
+[2025-11-11 17:48:12 UTC] [OK] Manifest saved from 2.final-space.com
+[2025-11-11 17:49:43 UTC] [OK] Manifest saved from 2.final-space.com
+[2025-11-11 17:50:28 UTC] [OK] Manifest saved from 2.final-space.com
+[2025-11-11 17:50:29 UTC] [OK] Manifest saved from 2.final-space.com
+[2025-11-13 19:26:41 UTC] [OK] Manifest saved from 2.final-space.com
+[2025-11-13 19:28:56 UTC] [OK] Manifest saved from 2.final-space.com
+[2025-11-13 19:56:33 UTC] [OK] Manifest saved from 2.final-space.com

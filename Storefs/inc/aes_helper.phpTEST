@@ -1,0 +1,76 @@
+<?php
+/**
+ * Final Space Client AES Helper — v4.0
+ * Unified AES-256-CBC implementation (auto key + deterministic IV)
+ * - Uses the same key format as License Server
+ * - Loads /keys/aes_secret.key and fails gracefully if missing
+ */
+
+if (!defined('FS_AES_KEY')) {
+    $keyFile = __DIR__ . '/../keys/aes_secret.key';
+    if (is_file($keyFile)) {
+        $secret = trim(file_get_contents($keyFile));
+        define('FS_AES_KEY', $secret);
+    } else {
+        error_log('[FS-AES] Missing AES secret at: ' . $keyFile);
+        define('FS_AES_KEY', ''); // placeholder to avoid fatal error
+    }
+}
+
+if (!defined('FS_AES_IV')) {
+    // Deterministic IV derived from AES key for consistent sealing
+    define('FS_AES_IV', substr(hash('sha256', FS_AES_KEY, true), 0, 16));
+}
+
+/**
+ * Encrypt plaintext → Base64
+ */
+function fs_aes_encrypt(string $plain): string {
+    if (!FS_AES_KEY) {
+        error_log('[FS-AES] Encryption skipped — missing AES key.');
+        return '';
+    }
+    $key = hash('sha256', FS_AES_KEY, true);
+    $iv  = FS_AES_IV;
+    $enc = openssl_encrypt($plain, 'AES-256-CBC', $key, OPENSSL_RAW_DATA, $iv);
+    if ($enc === false) {
+        error_log('[FS-AES] OpenSSL encryption failed.');
+        return '';
+    }
+    return base64_encode($enc);
+}
+
+/**
+ * Decrypt Base64 → plaintext
+ */
+function fs_aes_decrypt(string $encoded): string {
+    if (!FS_AES_KEY) {
+        error_log('[FS-AES] Decryption failed — AES key not loaded.');
+        return '';
+    }
+    $key  = hash('sha256', FS_AES_KEY, true);
+    $iv   = FS_AES_IV;
+    $data = base64_decode($encoded, true);
+    if ($data === false) {
+        error_log('[FS-AES] Base64 decode failed.');
+        return '';
+    }
+    $dec = openssl_decrypt($data, 'AES-256-CBC', $key, OPENSSL_RAW_DATA, $iv);
+    if ($dec === false) {
+        error_log('[FS-AES] OpenSSL decryption failed.');
+        return '';
+    }
+    return $dec;
+}
+
+/**
+ * Debug utility — shows loaded AES info
+ */
+function fs_aes_info(): array {
+    return [
+        'key'  => FS_AES_KEY ? substr(FS_AES_KEY, 0, 8) . '...' : '[missing]',
+        'iv'   => base64_encode(FS_AES_IV),
+        'path' => realpath(__DIR__ . '/../keys/aes_secret.key') ?: '[not found]',
+    ];
+}
+?>

@@ -1,0 +1,19 @@
+[2025-11-10 21:06:54 UTC] [DENY] IP not allowed: 89.44.109.103
+[2025-11-10 21:07:19 UTC] [DENY] IP not allowed: 89.44.109.103
+[2025-11-10 21:09:19 UTC] [DENY] Not allowed — IP: 89.44.109.103, Host: 
+[2025-11-10 21:09:23 UTC] [DENY] Not allowed — IP: 89.44.109.103, Host: 
+[2025-11-11 14:46:51 UTC] [DENY] Not allowed — IP: 89.44.109.103, Domain: 2.final-space.com
+[2025-11-11 15:01:15 UTC] [OK] Manifest received & verified — domain=2.final-space.com, host=2.final-space.com, ip=89.44.109.103
+[2025-11-11 15:01:20 UTC] [OK] Manifest received & verified — domain=2.final-space.com, host=2.final-space.com, ip=89.44.109.103
+[2025-11-11 15:01:20 UTC] [OK] Manifest received & verified — domain=2.final-space.com, host=2.final-space.com, ip=89.44.109.103
+[2025-11-11 15:01:25 UTC] [OK] Manifest received & verified — domain=2.final-space.com, host=2.final-space.com, ip=89.44.109.103
+[2025-11-11 15:01:30 UTC] [OK] Manifest received & verified — domain=2.final-space.com, host=2.final-space.com, ip=89.44.109.103
+[2025-11-11 15:01:39 UTC] [OK] Manifest received & verified — domain=2.final-space.com, host=2.final-space.com, ip=89.44.109.103
+[2025-11-11 15:01:44 UTC] [OK] Manifest received & verified — domain=2.final-space.com, host=2.final-space.com, ip=89.44.109.103
+[2025-11-11 15:03:31 UTC] [OK] Manifest received & verified — domain=2.final-space.com, host=2.final-space.com, ip=89.44.109.103
+[2025-11-11 16:18:44 UTC] [OK] Manifest received & verified — domain=2.final-space.com, host=2.final-space.com, ip=89.44.109.103
+[2025-11-11 16:18:45 UTC] [OK] Manifest received & verified — domain=2.final-space.com, host=2.final-space.com, ip=89.44.109.103
+[2025-11-11 16:45:16 UTC] [OK] Manifest verified (214 bytes, host=2.final-space.com, ip=89.44.109.103)
+[2025-11-11 16:45:23 UTC] [OK] Manifest verified (214 bytes, host=2.final-space.com, ip=89.44.109.103)
+[2025-11-11 17:05:37 UTC] [OK] Manifest verified (214 bytes, host=2.final-space.com, ip=89.44.109.103)
+[2025-11-11 17:05:50 UTC] [OK] Manifest verified (214 bytes, host=2.final-space.com, ip=89.44.109.103)

@@ -1,0 +1,59 @@
+<?php
+/**
+ * Final Space — sealed_loader.php (v7.5)
+ * Correct base path resolution (avoids /inc/../protected)
+ */
+
+error_reporting(E_ALL);
+ini_set('display_errors', '0');
+header('Content-Type: text/html; charset=utf-8');
+
+// --- load AES helper first ---
+$base = dirname(__DIR__); // ✅ one directory above /inc/
+$aesHelper = $base . '/inc/aes_helper.php';
+
+if (!is_file($aesHelper)) {
+    die('<pre style="color:#f87171;background:#000;padding:8px">❌ AES helper not found at: ' . htmlspecialchars($aesHelper) . '</pre>');
+}
+require_once $aesHelper;
+
+// --- Safe include function ---
+if (!function_exists('include_sealed')) {
+    /**
+     * include_sealed — loads and decrypts sealed files.
+     * Accepts path relative to project root (without ".php").
+     */
+    function include_sealed(string $relativePath): void
+    {
+        $root = dirname(__DIR__, 1);
+        $sealedFile = $root . '/protected/' . trim($relativePath, '/');
+        if (!str_ends_with($sealedFile, '.php')) {
+            $sealedFile .= '.php';
+        }
+
+        if (!is_file($sealedFile)) {
+            die('<pre style="color:#f87171;background:#000;padding:8px">❌ Sealed file not found: ' . htmlspecialchars($sealedFile) . '</pre>');
+        }
+
+        $encoded = file_get_contents($sealedFile);
+        $decoded = fs_aes_decrypt($encoded);
+
+        if ($decoded === '' || $decoded === false) {
+            die('<pre style="color:#f87171;background:#000;padding:8px">❌ AES decryption failed for: ' . htmlspecialchars($sealedFile) . '</pre>');
+        }
+
+        // ✅ FIX: handle strict_types safely
+        $decoded = ltrim($decoded, "\xEF\xBB\xBF"); // remove UTF-8 BOM if any
+        $decoded = preg_replace('/^<\?php\s*/i', '', $decoded, 1);
+
+        // Split strict_types declaration if exists
+        if (preg_match('/^declare\s*\(\s*strict_types\s*=\s*1\s*\)\s*;/i', $decoded, $m)) {
+            $decl = $m[0];
+            $decoded = preg_replace('/^' . preg_quote($decl, '/') . '/i', '', $decoded, 1);
+            eval($decl . "\n" . $decoded);
+        } else {
+            eval($decoded);
+        }
+    }
+}
+?>

@@ -1,0 +1,275 @@
+/* Final Space Store — style.css v10.6 FIXED
+   - Hover description center (kept)
+   - Buy button color fixed (bright blue + glow)
+   - Toasts centered
+   - Wallet and layout unchanged
+*/
+
+:root {
+  --bg-main: #0b0f19;
+  --bg-header: #0e1624;
+  --bg-card: #101622;
+  --accent: #007bff;
+  --accent-hover: #1990ff;
+  --success: #16a34a;
+  --danger: #dc2626;
+  --text: #e5e7eb;
+  --muted: #9ca3af;
+  --font: 'Inter', system-ui, sans-serif;
+}
+
+/* ---------- BASE ---------- */
+body {
+  margin: 0;
+  background: var(--bg-main);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 15px;
+  overflow-x: hidden;
+}
+
+/* ---------- HEADER ---------- */
+.fs-header {
+  background: var(--bg-header);
+  border-bottom: 1px solid #1f2937;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+}
+
+.fs-header-wrap {
+  max-width: 1250px;
+  margin: 0 auto;
+  padding: 14px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.fs-brand {
+  font-weight: 700;
+  font-size: 20px;
+  color: #fff;
+}
+
+.fs-center {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #93c5fd;
+  font-size: 14px;
+  flex: 1;
+  justify-content: center;
+}
+
+.fs-tag {
+  opacity: 0.8;
+}
+
+.fs-addr {
+  color: #4ff7ff;
+  font-weight: 600;
+}
+
+.fs-bal {
+  color: #ffc96b;
+  font-weight: 600;
+}
+
+.fs-right {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* ---------- BUTTONS ---------- */
+.fs-btn {
+  border: none;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 8px 15px;
+  transition: background .25s, transform .25s, box-shadow .25s;
+}
+
+.fs-btn-blue {
+  background: var(--accent);
+  color: #fff;
+}
+
+.fs-btn-blue:hover {
+  background: var(--accent-hover);
+  transform: scale(1.05);
+  box-shadow: 0 0 15px var(--accent);
+}
+
+.fs-btn-ghost {
+  background: #334155;
+  color: #e5e7eb;
+}
+
+.fs-btn-ghost:hover {
+  background: #475569;
+  transform: scale(1.05);
+}
+
+/* ---------- GRID ---------- */
+.container {
+  max-width: 1250px;
+  margin: 0 auto;
+  padding: 40px 20px 80px;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 25px;
+  justify-content: center;
+  align-items: stretch;
+}
+
+/* ---------- PRODUCT CARD ---------- */
+.product-card {
+  background: var(--bg-card);
+  border-radius: 16px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, .35);
+  transition: transform .25s ease, box-shadow .25s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, .45);
+}
+
+/* ---------- IMAGE + DESCRIPTION ---------- */
+.product-img {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+  border-radius: 16px 16px 0 0;
+}
+
+.product-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform .4s ease;
+}
+
+.product-card:hover img {
+  transform: scale(1.06);
+}
+
+.hover-desc {
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  color: #fff;
+  font-size: 15px;
+  font-weight: 500;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 15px;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  pointer-events: none;
+}
+
+.product-img:hover .hover-desc {
+  opacity: 1;
+}
+
+/* ---------- INFO + BUTTON ---------- */
+.product-info {
+  text-align: center;
+  padding: 18px 16px 22px;
+}
+
+.product-name {
+  color: #fff;
+  font-size: 17px;
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+
+.buy-btn {
+  display: inline-block;
+  background: var(--accent);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 9px 18px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all .25s ease;
+}
+
+.buy-btn:hover {
+  background: var(--accent-hover);
+  transform: scale(1.05);
+  box-shadow: 0 0 12px var(--accent);
+}
+
+.buy-btn.downloaded {
+  background: var(--success);
+}
+
+/* ---------- TOAST NOTIFICATIONS ---------- */
+#fs_toasts {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 9999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  pointer-events: none;
+}
+
+#fs_toasts div {
+  min-width: 220px;
+  max-width: 320px;
+  padding: 12px 18px;
+  border-radius: 10px;
+  font-weight: 600;
+  color: #fff;
+  font-size: 15px;
+  text-align: center;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, .5);
+  opacity: 0;
+  transform: translateY(10px);
+  animation: toastIn .25s ease forwards, toastOut .35s ease 3.5s forwards;
+}
+
+#fs_toasts .ok { background: var(--success); }
+#fs_toasts .error { background: var(--danger); }
+
+@keyframes toastIn {
+  to {opacity: 1; transform: translateY(0);}
+}
+
+@keyframes toastOut {
+  to {opacity: 0; transform: translateY(-15px);}
+}
+
+/* ---------- RESPONSIVE ---------- */
+@media (max-width: 900px) {
+  .grid { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
+}
+
+@media (max-width: 640px) {
+  .fs-header-wrap { flex-direction: column; align-items: flex-start; }
+  .fs-center { justify-content: flex-start; flex-wrap: wrap; }
+  .grid { grid-template-columns: 1fr; }
+  .container { padding: 25px 10px 60px; }
+}
